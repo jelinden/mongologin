@@ -76,13 +76,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>5.7</version>
-      <classifier>jdk15</classifier>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>javax.persistence</groupId>
       <artifactId>com.springsource.javax.persistence</artifactId>
       <version>2.0.0</version>
@@ -103,19 +96,9 @@
       <version>1.2.0</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.xmlcommons</groupId>
-      <artifactId>com.springsource.org.apache.xmlcommons</artifactId>
-      <version>1.3.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jdom</groupId>
-      <artifactId>com.springsource.org.jdom</artifactId>
-      <version>1.1.0</version>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.8.1</version>
+      <version>4.8.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -144,19 +127,24 @@
       <version>1.3.1</version>
     </dependency>
     <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.16</version>
+    </dependency>
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.5.6</version>
+      <version>1.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>1.6.1</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      <version>1.5.6</version>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.16</version>
+      <version>1.6.1</version>
     </dependency>
     <dependency>
       <groupId>com.thoughtworks.proxytoys</groupId>
@@ -168,7 +156,7 @@
     <dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-mongodb</artifactId>
-      <version>1.0.0.BUILD-SNAPSHOT</version>
+      <version>1.0.0.M4</version>
     </dependency>
     <dependency>
       <groupId>cglib</groupId>
@@ -202,20 +190,61 @@
       <plugin>
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
-        <version>7.4.2.v20110526</version>
+        <version>7.2.2.v20101205</version>
+        <executions>
+          <execution>
+            <id>start-jetty</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <scanIntervalSeconds>0</scanIntervalSeconds>
+              <daemon>true</daemon>
+              <stopKey>STOP</stopKey>
+              <stopPort>9901</stopPort>
+              <webAppConfig>
+                <contextPath>/</contextPath>
+              </webAppConfig>
+              <connectors>
+                <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                  <port>9900</port>
+                </connector>
+              </connectors>
+            </configuration>
+          </execution>
+          <execution>
+            <id>stop-jetty</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+            <configuration>
+              <stopKey>STOP</stopKey>
+              <stopPort>9901</stopPort>
+              <webAppConfig>
+                <contextPath>/</contextPath>
+              </webAppConfig>
+              <connectors>
+                <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                  <port>9900</port>
+                </connector>
+              </connectors>
+            </configuration>
+          </execution>
+        </executions>
         <configuration>
-          <scanIntervalSeconds>5</scanIntervalSeconds>
+          <stopKey>STOP</stopKey>
+          <stopPort>9901</stopPort>
           <webAppConfig>
-            <contextPath>/uutiset</contextPath>
+            <contextPath>/</contextPath>
           </webAppConfig>
+          <connectors>
+            <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+              <port>9900</port>
+            </connector>
+          </connectors>
         </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlets</artifactId>
-            <version>7.4.2.v20110526</version>
-          </dependency>
-        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -225,9 +254,35 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.7.1</version>
+        <executions>
+          <execution>
+            <id>default-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
         <version>2.8</version>
+        <executions>
+          <execution>
+            <id>integration-test</id>
+            <goals>
+              <goal>integration-test</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>verify</id>
+            <goals>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
@@ -248,9 +303,9 @@
       <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
     </repository>
     <repository>
-      <id>spring-snapshot</id>
-      <name>Spring Maven SNAPSHOT Repository</name>
-      <url>http://s3.amazonaws.com/maven.springframework.org/snapshot</url>
-    </repository>
+	    <id>spring-milestone</id>
+	    <name>Spring Maven MILESTONE Repository</name>
+	    <url>http://maven.springframework.org/milestone</url>
+	  </repository>
   </repositories>
 </project>

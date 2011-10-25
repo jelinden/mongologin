@@ -3,7 +3,7 @@ Training with mongodb and spring-data-mongodb project
 
 The purpose of this exercise is to make a simple working signup/login web application.
 
-1. Set up mongodb on your computer (< href="http://www.mongodb.org/downloads">Downloads</a>)
+1. Set up mongodb on your computer (<a href="http://www.mongodb.org/downloads">Downloads</a>)
  - windows (http://www.mongodb.org/display/DOCS/Quickstart+Windows)
  - unix (http://www.mongodb.org/display/DOCS/Quickstart+Unix)
  - osx (http://www.mongodb.org/display/DOCS/Quickstart+OS+X)

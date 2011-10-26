@@ -3,7 +3,9 @@ package fi.mongologin.controller;
 import static org.springframework.test.web.ModelAndViewAssert.assertViewName;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -34,7 +36,7 @@ public class SignUpControllerTest {
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
     private HandlerAdapter handlerAdapter;
-    private LoginController controller;
+    private SignUpController controller;
   
     @Before
     public void setUp() {
@@ -42,7 +44,7 @@ public class SignUpControllerTest {
         response = new MockHttpServletResponse();
         applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
         handlerAdapter = applicationContext.getBean(HandlerAdapter.class);
-        controller = new LoginController();
+        controller = new SignUpController();
         controller.setUserService(applicationContext.getBean(UserService.class));
     }
     
@@ -55,10 +57,15 @@ public class SignUpControllerTest {
     }
     
     @Test
-    public void testLogin() throws Exception {
+    public void testSignUp() throws Exception {
         request.setMethod("POST");
         request.setRequestURI("/signup");
+        Map<String,String> userMap = new HashMap<String,String>();
+        userMap.put("userName", "test");
+        userMap.put("password", "password");
+        request.addParameters(userMap);
         final ModelAndView signup = handlerAdapter.handle(request, response, controller);
-        assertViewName(signup, "signup");
+        //signup succeeds
+        assertViewName(signup, "login");
     }
 }

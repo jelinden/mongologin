@@ -3,7 +3,9 @@ package fi.mongologin.controller;
 import static org.springframework.test.web.ModelAndViewAssert.assertViewName;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -57,8 +59,12 @@ public class LoginControllerTest {
     @Test
     public void testLoginPost() throws Exception {
         request.setMethod("POST");
-        request.setRequestURI("/");
+        request.setRequestURI("/login");
+        Map<String,String> userMap = new HashMap<String,String>();
+        userMap.put("userName", "test");
+        userMap.put("password", "password");
+        request.addParameters(userMap);
         final ModelAndView login = handlerAdapter.handle(request, response, controller);
-        assertViewName(login, "/");
+        assertViewName(login, "index");
     }
 }

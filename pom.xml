@@ -101,6 +101,12 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+	    <groupId>easymock</groupId>
+	    <artifactId>easymock</artifactId>
+	    <version>2.0</version>
+		  <scope>test</scope>
+		</dependency>
+    <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
       <version>1.4</version>

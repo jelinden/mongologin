@@ -27,9 +27,9 @@ import fi.mongologin.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={ "classpath:applicationContext.xml" })
-public class LoginControllerTest {
+public class SignUpControllerTest {
     
-    protected static final Logger log = LoggerFactory.getLogger(LoginControllerTest.class);
+    protected static final Logger log = LoggerFactory.getLogger(SignUpControllerTest.class);
     private ApplicationContext applicationContext;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
@@ -47,18 +47,18 @@ public class LoginControllerTest {
     }
     
     @Test
-    public void testLogin() throws Exception {
+    public void testSignUpGet() throws Exception {
         request.setMethod("GET");
-        request.setRequestURI("/login");
-        final ModelAndView login = handlerAdapter.handle(request, response, controller);
-        assertViewName(login, "login");
+        request.setRequestURI("/signup");
+        final ModelAndView signup = handlerAdapter.handle(request, response, controller);
+        assertViewName(signup, "signup");
     }
     
     @Test
-    public void testLoginPost() throws Exception {
+    public void testLogin() throws Exception {
         request.setMethod("POST");
-        request.setRequestURI("/");
-        final ModelAndView login = handlerAdapter.handle(request, response, controller);
-        assertViewName(login, "/");
+        request.setRequestURI("/signup");
+        final ModelAndView signup = handlerAdapter.handle(request, response, controller);
+        assertViewName(signup, "signup");
     }
 }

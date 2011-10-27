@@ -19,5 +19,6 @@
   
   <mvc:annotation-driven/>
   <context:annotation-config/>
+  <aop:aspectj-autoproxy />
   <context:component-scan base-package="fi.mongologin"/>
 </beans>

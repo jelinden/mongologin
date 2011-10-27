@@ -65,6 +65,6 @@ public class LoginControllerTest {
         userMap.put("password", "password");
         request.addParameters(userMap);
         final ModelAndView login = handlerAdapter.handle(request, response, controller);
-        assertViewName(login, "index");
+        assertViewName(login, "redirect:/index");
     }
 }

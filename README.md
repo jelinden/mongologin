@@ -22,3 +22,7 @@ eg. Maven, git, your favorite text editor in place, installed and ready to be us
 4. Go through the tests
 
 5. Happy coding !
+
+========
+
+3.11.2011 Solution committed to repository

@@ -26,3 +26,5 @@ eg. Maven, git, your favorite text editor in place, installed and ready to be us
 ========
 
 3.11.2011 Solution committed to repository
+
+<!-- gerrit test -->

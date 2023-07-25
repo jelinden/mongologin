@@ -9,7 +9,7 @@
   <description>Code</description>
 
   <properties>
-    <spring.version>5.2.20.RELEASE</spring.version>
+    <spring.version>5.2.24.RELEASE</spring.version>
     <debug.level>DEBUG</debug.level>
   </properties>
 
